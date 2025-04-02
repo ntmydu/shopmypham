@@ -36,25 +36,25 @@ class ProductFeController extends Controller
             'images' => $images
         ]);
     }
-    public function addReview(Request $request, $id)
-    {
-        if (!Auth::check()) {
-            return redirect()->route('view.login')->with('error', 'Bạn cần đăng nhập để sử dụng mã giảm giá.');
-        }
-        // $product = Product::where('id', $id)->first();
-        // $menus = Menu::orderBy('name', 'ASC')->select('id', 'name')->get();
+    // public function addReview(Request $request, $id)
+    // {
+    //     if (!Auth::check()) {
+    //         return redirect()->route('view.login')->with('error', 'Bạn cần đăng nhập để sử dụng mã giảm giá.');
+    //     }
+    //     // $product = Product::where('id', $id)->first();
+    //     // $menus = Menu::orderBy('name', 'ASC')->select('id', 'name')->get();
 
-        // $images = Upload::where('product_id', $product->id)->get();
-        $product_id = $request->product_hidden;
-        $review = Ratting::created([
-            'product_id' => $request->product_id,
-            'user_id' => Auth::id(), // Lấy ID người dùng đang đăng nhập
-            'rating' => $request->rating,
-            'comment' => $request->comment,
-        ]);
-        $rating = Ratting::where('product_id', $product_id)->svg('rating');
-        $rating = round('rating');
-        return $rating;
-        return redirect()->back();
-    }
+    //     // $images = Upload::where('product_id', $product->id)->get();
+    //     $product_id = $request->product_hidden;
+    //     $review = Ratting::created([
+    //         'product_id' => $request->product_id,
+    //         'user_id' => Auth::id(), // Lấy ID người dùng đang đăng nhập
+    //         'rating' => $request->rating,
+    //         'comment' => $request->comment,
+    //     ]);
+    //     $rating = Ratting::where('product_id', $product_id)->svg('rating');
+    //     $rating = round('rating');
+    //     return $rating;
+    //     return redirect()->back();
+    // }
 }

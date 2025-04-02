@@ -116,9 +116,6 @@
                                 @endif
                             </ul>
                         </div>
-
-
-
                     </div>
                 </div>
             </nav>
@@ -183,39 +180,39 @@
 
 
 <script>
-const dropdownMenu = document.querySelector(".dropdown-menu")
-const dropdownArrow = document.querySelector('.dropdown-arrrow')
-const dropdown = document.querySelector('.dropdown').addEventListener('click', (e) => {
-    if (dropdownMenu.style.display == 'block') {
-        dropdownMenu.style.display = 'none'
-        dropdownArrow.style.rotate = '90deg'
-    } else {
-        dropdownMenu.style.display = 'block'
-        dropdownArrow.style.rotate = '-90deg'
-    }
-})
+    const dropdownMenu = document.querySelector(".dropdown-menu")
+    const dropdownArrow = document.querySelector('.dropdown-arrrow')
+    const dropdown = document.querySelector('.dropdown').addEventListener('click', (e) => {
+        if (dropdownMenu.style.display == 'block') {
+            dropdownMenu.style.display = 'none'
+            dropdownArrow.style.rotate = '90deg'
+        } else {
+            dropdownMenu.style.display = 'block'
+            dropdownArrow.style.rotate = '-90deg'
+        }
+    })
 </script>
 <script>
-document.querySelector('.js-show-modal-search').addEventListener('click', function() {
-    const searchInput = document.getElementById('searchInput');
-    if (searchInput.style.display === 'block') {
-        searchInput.style.display = 'none';
-    } else {
-        searchInput.style.display = 'block';
-        searchInput.focus();
-    }
-});
+    document.querySelector('.js-show-modal-search').addEventListener('click', function() {
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput.style.display === 'block') {
+            searchInput.style.display = 'none';
+        } else {
+            searchInput.style.display = 'block';
+            searchInput.focus();
+        }
+    });
 </script>
 
 <script>
-const dropdownBtnElement = document.getElementById('dropdown-btn')
-const dropdownInfoElement = document.getElementById('dropdown-info')
+    const dropdownBtnElement = document.getElementById('dropdown-btn')
+    const dropdownInfoElement = document.getElementById('dropdown-info')
 
-dropdownBtnElement.addEventListener('click', () => {
-    if (dropdownInfoElement.style.display === 'flex') {
-        dropdownInfoElement.style.display = 'none'
-    } else {
-        dropdownInfoElement.style.display = 'flex'
-    }
-})
+    dropdownBtnElement.addEventListener('click', () => {
+        if (dropdownInfoElement.style.display === 'flex') {
+            dropdownInfoElement.style.display = 'none'
+        } else {
+            dropdownInfoElement.style.display = 'flex'
+        }
+    })
 </script>

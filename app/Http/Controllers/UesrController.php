@@ -8,7 +8,6 @@ use App\Models\Slide;
 use App\Models\Menu;
 use App\Models\Product;
 use App\Models\Upload;
-use Faker\Guesser\Name;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -63,6 +62,7 @@ class UesrController extends Controller
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
                 Auth::login($user);
+
                 if (Auth::check()) {
                     $user = Auth::user();
                     if (Auth::user()->role_user == 'admin') {
@@ -71,7 +71,6 @@ class UesrController extends Controller
                         ]);
                         return redirect()->route('admin');
                     } else {
-                        return $user;
                         return redirect('/');
                     }
                 } else {

@@ -81,7 +81,7 @@
             </div>
 
         </div>
-        <div style="width: 100%" class="row">
+        <!-- <div style="width: 100%" class="row">
             @if(Auth::check())
             <form style="width: 100%" id="reviewForm">
                 <input type="hidden" id="product_id" value="{{ $product->id }}">
@@ -106,14 +106,15 @@
             <span style="font-size: 1.5rem;">Vui lòng <a href="{{ route('login') }}">đăng nhập</a> để đánh giá sản
                 phẩm.</span>
             @endif
-            @endsection
-        </div>
+
+        </div> -->
+
     </div>
 
 
 </section>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@endsection
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function() {
     const productId = $('#product_id').val();
@@ -159,30 +160,30 @@ $(document).ready(function() {
 
     fetchReviews();
 });
-</script>
+</script> -->
 <script>
-const handleChangeImage = (urlImg) => {
-    document.getElementById('product-img').src = urlImg;
+    const handleChangeImage = (urlImg) => {
+        document.getElementById('product-img').src = urlImg;
 
-    const thumbs = document.getElementsByClassName('product-img-thumb');
+        const thumbs = document.getElementsByClassName('product-img-thumb');
 
-    // Lặp qua tất cả thumbnail để thêm hoặc xóa class 'active'
-    for (let i = 0; i < thumbs.length; i++) {
-        if (thumbs[i].src === urlImg) {
-            thumbs[i].style.border = '1px solid'; // Thêm border cho thumbnail đã nhấn
-        } else {
-            thumbs[i].style.border = 'none'; // Xóa border cho thumbnail không phải là thumbnail đã nhấn
+        // Lặp qua tất cả thumbnail để thêm hoặc xóa class 'active'
+        for (let i = 0; i < thumbs.length; i++) {
+            if (thumbs[i].src === urlImg) {
+                thumbs[i].style.border = '1px solid'; // Thêm border cho thumbnail đã nhấn
+            } else {
+                thumbs[i].style.border = 'none'; // Xóa border cho thumbnail không phải là thumbnail đã nhấn
+            }
         }
     }
-}
 
-window.onload = function() {
-    const thumbs = document.getElementsByClassName('product-img-thumb');
-    if (thumbs.length > 0) {
-        // Lấy nguồn của thumbnail đầu tiên
-        const firstThumb = thumbs[0].src;
-        handleChangeImage(firstThumb); // Đặt ảnh chính là thumbnail đầu tiên
-        thumbs[0].style.border = '1px solid'; // Thêm border cho thumbnail đầu tiên
+    window.onload = function() {
+        const thumbs = document.getElementsByClassName('product-img-thumb');
+        if (thumbs.length > 0) {
+            // Lấy nguồn của thumbnail đầu tiên
+            const firstThumb = thumbs[0].src;
+            handleChangeImage(firstThumb); // Đặt ảnh chính là thumbnail đầu tiên
+            thumbs[0].style.border = '1px solid'; // Thêm border cho thumbnail đầu tiên
+        }
     }
-}
 </script>

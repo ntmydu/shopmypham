@@ -80,7 +80,6 @@ class OrderController extends Controller
             return redirect()->back()->with('error', 'Mã không hợp lệ.');
         }
 
-
         $carts = session()->get('cart', []);
         $totalAmount = 0;
 

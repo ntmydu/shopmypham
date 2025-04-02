@@ -75,19 +75,29 @@
 
                         <div class="card-content">
                             <div class="price">
-                                <del class="del">{{number_format($product->price)}}đ</del>
-                                <span class="span">{{number_format($product->price_sale)}}đ</span>
+                                <del class="del">{{number_format($product->price, 0, ',', '.')}}đ</del>
+                                <span class="span">{{number_format($product->price_sale, 0, ',', '.')}}đ</span>
                             </div>
                             <h3>
                                 <a href="#" class="card-title">{{$product->name}}</a>
                             </h3>
-                            <form class="add_to-cart" action="{{route('cart.add')}}" method="POST">
-                                @csrf
-                                <input type="hidden" name="product_hidden" value="{{$product->id}}">
-                                <input type="hidden" name="qty" value="1">
-                                <button type="submit"> <i class="lni lni-cart-1"></i></button>
+                            <div>
+                                @if($product->stock <= 0) <button type="submit" class="btn btn-dark">Hết hàng</button>
 
-                            </form>
+                                    @else
+                                    <form class="add_to-cart" action="{{route('cart.add')}}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="product_hidden" value="{{$product->id}}">
+                                        <div style="display: flex; gap: 10px">
+                                            <input type="number" hidden name="qty" value="1">
+                                            <button type="submit">
+                                                <i class="zmdi zmdi-shopping-cart" style="font-size: 3rem;"></i>
+                                            </button>
+                                        </div>
+
+                                    </form>
+                                    @endif
+                            </div>
                         </div>
                     </div>
                 </div>

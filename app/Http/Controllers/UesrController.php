@@ -4,8 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Slide;
+use App\Models\Menu;
+use App\Models\Product;
+use App\Models\Upload;
 use Faker\Guesser\Name;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+
 
 class UesrController extends Controller
 {
@@ -18,23 +25,93 @@ class UesrController extends Controller
     }
     public function formregis()
     {
+
         return view('regis', [
             'title' => 'Đăng kí thành viên'
         ]);
     }
     public function regis(Request $request)
     {
-
-
         // // Tạo người dùng mới
+        $randomId = Str::random(10);
         User::create([
+            'id' => $randomId,
             'name' => $request->input('name'),
             'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
+            'password' => bcrypt($request->input('password')),
         ]);
 
         // // Chuyển hướng đến trang đăng nhập hoặc trang khác
-        return redirect('login')->with('success', 'Đăng ký thành công! Vui lòng đăng nhập.');
+        return view('login')->with('success', 'Đăng ký thành công! Vui lòng đăng nhập.');
+    }
+    public function showlogin()
+    {
+        return view('login');
+    }
+    public function login(Request $request)
+    {
+        $menus = Menu::all();
+        // $slides = Slide::orderBy('id', 'DESC')->where('status', '1')->take(4)->get();
+        $slides =  Slide::orderBy('id', 'DESC')->get();
+        $product = Product::all()->take(4);
+        $images = Upload::all();
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+        $user = User::where('email', '=', $request->email)->first();
+        if ($user) {
+            if (Hash::check($request->password, $user->password)) {
+                Auth::login($user);
+                if (Auth::check()) {
+                    $user = Auth::user();
+                    if (Auth::user()->role_user == 'admin') {
+                        toastify()->success('Đăng nhập thành công', [
+                            'duration' => 5000,
+                        ]);
+                        return redirect()->route('admin');
+                    } else {
+                        return $user;
+                        return redirect('/');
+                    }
+                } else {
+                    toastify()->error('Có lỗi khi đăng nhập', [
+                        'duration' => 5000,
+                    ]);
+                    return redirect()->back(); // Trả về hiện tại khi không tồn tại Auth
+                }
+            } else {
+                toastify()->error('Mật khẩu không chính xác', [
+                    'duration' => 5000,
+                ]);
+                return redirect()->back(); // Trả về hiện tại khi không tồn tại Auth
+            }
+        } else {
+            toastify()->error('Tài khoảng không tồn tại', [
+                'duration' => 5000,
+            ]);
+            return redirect()->back(); // Trả về hiện tại khi không tồn tại Auth
+        }
+    }
+    public function logout()
+    {
+        $menus = Menu::all();
+        // $slides = Slide::orderBy('id', 'DESC')->where('status', '1')->take(4)->get();
+        $slides =  Slide::orderBy('id', 'DESC')->get();
+        $product = Product::all()->take(4);
+        $images = Upload::all();
+
+        Auth::logout();
+        session()->forget('user_profile');
+        return view(
+            'fontend.home',
+            [
+                'slides' => $slides,
+                'menus' => $menus,
+                'products' => $product,
+                'images' => $images
+            ]
+        );
     }
     public function create()
     {
@@ -94,5 +171,21 @@ class UesrController extends Controller
         $user->delete();
 
         return redirect()->back()->with('success', 'Xóa tài khoản thành công');
+    }
+    public function search(Request $request)
+    {
+
+        $keywords = $request->input('searchInput', '');
+
+        $user = User::all();
+
+        $search_user = User::where('name', 'like', '%' . trim($keywords) . '%')->get();
+
+
+        return view('admin.user.search', [
+            'user' => $user,
+            'search_user' => $search_user,
+
+        ]);
     }
 }

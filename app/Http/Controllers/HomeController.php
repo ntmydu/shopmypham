@@ -24,11 +24,18 @@ class HomeController extends Controller
             'images' => $images
         ]);
     }
-    // public function show($id)
-    // {
-    //     $menus = Menu::all();
-    //     return view('show', [
-    //         'menus' => $menus
-    //     ]);
-    // }
+    public function search(Request $request)
+    {
+
+        $keywords = $request->input('searchInput', '');
+        $menus = Menu::all();
+        $images = Upload::all();
+        $search_product = Product::where('name', 'like', '%' . trim($keywords) . '%')->get();
+
+        return view('fontend.search', [
+            'menus' => $menus,
+            'search_product' => $search_product,
+            'images' => $images
+        ]);
+    }
 }

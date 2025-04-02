@@ -75,21 +75,48 @@
                     @endforeach
                     @endif
                     <div class="wrap-icon-header flex-w flex-r-m">
-                        <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
-                            <i class="zmdi zmdi-search"></i>
-                        </div>
+                        <form action="{{route('search')}}">
+                            @csrf
+                            <div style="display: flex; align-items: center; gap:10px;" class="search">
+                                <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
+                                    <i class=" zmdi zmdi-search"></i>
+                                </div>
+                                <input type="text" name="searchInput" class="search_input" id="searchInput"
+                                    placeholder="Nhập từ khóa..." style="display: none;" onchange="this.form.submit()">
+                            </div>
+                        </form>
 
-                        <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"
+
+                        <div class=" icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"
                             data-notify="{{$totalQuantity}}">
                             <a href="{{ route('cart.index') }}">
-                                <i class="zmdi zmdi-shopping-cart"></i>
+                                <i class="zmdi zmdi-shopping-cart" style="color: #000"></i>
 
                             </a>
 
                         </div>
-                        <button class="header-action-btn" aria-label="favourite item">
-                            <i class="lni lni-user-4"></i>
-                        </button>
+                        <div class="dropdown profile">
+                            <div class="dropdowm-btn" onclick="handleShowDropdownProfile()" id="dropdown-btn">
+                                <button class="header-action-btn" aria-label="favourite item">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="width: 20px">
+                                        <path
+                                            d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z" />
+                                    </svg>
+                                    <span class="dropdown-arrrow"></span>
+                                </button>
+                                <button></button>
+                            </div>
+
+                            <ul class="dropdowm-menu__profile" id="dropdown-info">
+                                @if(Auth::check())
+                                <li><a href="" class="dropdowm-item">Thông tin tài khoản</a></li>
+                                <li><a href="{{route('logout')}}" class="dropdowm-item">Đăng xuất</a></li>
+                                @else
+                                <li><a href="{{route('view.login')}}" class="dropdowm-item">Đăng nhập</a></li>
+                                @endif
+                            </ul>
+                        </div>
+
 
 
                     </div>
@@ -130,9 +157,6 @@
     <div class="menu-mobile">
         <ul class="main-menu-m">
             <li class="active-menu"><a href="/">Trang Chủ</a> </li>
-
-
-
             <li>
                 <a href="contact.html">Liên Hệ</a>
             </li>
@@ -168,6 +192,30 @@ const dropdown = document.querySelector('.dropdown').addEventListener('click', (
     } else {
         dropdownMenu.style.display = 'block'
         dropdownArrow.style.rotate = '-90deg'
+    }
+})
+</script>
+<script>
+document.querySelector('.js-show-modal-search').addEventListener('click', function() {
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput.style.display === 'block') {
+        searchInput.style.display = 'none';
+    } else {
+        searchInput.style.display = 'block';
+        searchInput.focus();
+    }
+});
+</script>
+
+<script>
+const dropdownBtnElement = document.getElementById('dropdown-btn')
+const dropdownInfoElement = document.getElementById('dropdown-info')
+
+dropdownBtnElement.addEventListener('click', () => {
+    if (dropdownInfoElement.style.display === 'flex') {
+        dropdownInfoElement.style.display = 'none'
+    } else {
+        dropdownInfoElement.style.display = 'flex'
     }
 })
 </script>

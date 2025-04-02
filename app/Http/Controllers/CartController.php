@@ -84,7 +84,20 @@ class CartController extends Controller
         $cart = session()->get('cart', []);
 
         if (isset($cart[$id])) {
-            $cart[$id]['quantity'] = $request->input('quantity');
+            $product = Product::find($id);
+
+            // Kiểm tra số lượng kho
+            $requestedQuantity = $request->input('quantity');
+            if ($requestedQuantity > $product->stock) {
+                toastify()->error('Số lượng vượt quá số lượng kho!', [
+                    'duration' => 5000,
+                    'gravity' => 'top',
+                    'position' => 'right'
+                ]);
+                return redirect()->back();
+            }
+
+            $cart[$id]['quantity'] = $requestedQuantity;
             session()->put('cart', $cart);
 
             toastify()->success('Cập nhật số lượng thành công!', [
@@ -93,7 +106,7 @@ class CartController extends Controller
                 'position' => 'right'
             ]);
 
-            return redirect()->back()->with('success', 'Số lượng sản phẩm đã được cập nhật');
+            return redirect()->back();
         }
     }
 
@@ -119,16 +132,27 @@ class CartController extends Controller
         $cart = session()->get('cart', []);
 
         if (isset($cart[$id])) {
-            $cart[$id]['quantity'] = $cart[$id]['quantity'] + 1;
-            session()->put('cart', $cart);
-
-            toastify()->success('Sản phẩm trừ 1!', [
-                'duration' => 5000,
-                'gravity' => 'top',
-                'position' => 'right'
-            ]);
-            return redirect()->back()->with('success', 'Số lượng sản phẩm đã được cập nhật');
+            $product = Product::find($id);
+            if ($cart[$id]['quantity'] < $product->stock) {
+                $cart[$id]['quantity'] = $cart[$id]['quantity'] + 1;
+                toastify()->success('Sản phẩm thêm 1!', [
+                    'duration' => 5000,
+                    'gravity' => 'top',
+                    'position' => 'right'
+                ]);
+                session()->put('cart', $cart);
+            } else {
+                toastify()->error('Số lượng vượt quá số lượng kho!', [
+                    'duration' => 5000,
+                    'gravity' => 'top',
+                    'position' => 'right'
+                ]);
+            }
         }
+
+
+
+        return redirect()->back();
     }
 
     public function delete(Request $request, $id)

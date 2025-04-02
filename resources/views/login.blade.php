@@ -7,42 +7,43 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Login</title>
+    @toastifyCss
     <style>
-    body {
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: rgb(1, 38, 12);
-        background: linear-gradient(162deg, rgba(1, 38, 12, 1) 0%, rgba(23, 77, 25, 1) 34%, rgba(1, 25, 1, 1) 100%);
-    }
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgb(1, 38, 12);
+            background: linear-gradient(162deg, rgba(1, 38, 12, 1) 0%, rgba(23, 77, 25, 1) 34%, rgba(1, 25, 1, 1) 100%);
+        }
 
-    .form-container {
-        border: 1px solid #ccc;
-        padding: 20px;
-        border-radius: 16px;
+        .form-container {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 16px;
 
-    }
+        }
 
-    .heading {
-        color: #fff;
-        margin: 0 auto;
-        display: block;
-        text-align: center;
-    }
+        .heading {
+            color: #fff;
+            margin: 0 auto;
+            display: block;
+            text-align: center;
+        }
 
-    .form-label {
-        color: #fff;
-    }
+        .form-label {
+            color: #fff;
+        }
 
-    .form-text {
-        color: #fff;
-    }
+        .form-text {
+            color: #fff;
+        }
 
-    .form-check-label {
-        color: #fff;
-    }
+        .form-check-label {
+            color: #fff;
+        }
     </style>
 </head>
 
@@ -56,7 +57,8 @@
                 <div class="form-container">
 
                     <h1 class="heading">Đăng nhập</h1>
-                    <form>
+                    <form action="{{route('login')}}" method="POST">
+                        @csrf
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Email address</label>
                             <input type="email" class="form-control" name="email" id="exampleInputEmail1"
@@ -67,21 +69,25 @@
                             <label for="exampleInputPassword1" class="form-label">Password</label>
                             <input type="password" class="form-control" name="password" id="exampleInputPassword1">
                         </div>
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        <div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                            </div>
+                            <a href="">Quên mật khẩu</a>
                         </div>
                         <button type="submit" class="btn btn-success">Đăng nhập</button>
+                        <a href="/regis">Đăng ký</a>
                     </form>
                 </div>
-
-            </div>
-            <div class="col-3">
 
             </div>
         </div>
 
     </div>
+
+    </div>
 </body>
 
 </html>
+@toastifyJs

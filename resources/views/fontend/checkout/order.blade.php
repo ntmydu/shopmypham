@@ -22,11 +22,7 @@
                     <input type="text" class="form-control" id="note" name="note"
                         placeholder="Nhập ghi chú về đơn hàng(Nếu có)">
                 </div>
-                <div id="dis" class="form-group">
-                    <label class="discount-lab" for="note">Mã giảm giá:</label>
-                    <input class="discount" type="text" class="form-control" placeholder="Nhập mã giảm giá">
-                    <button class="btn btn-dark">Áp dụng</button>
-                </div>
+
                 <button class="btn btn-dark" type="submit">Tiếp tục</button>
             </div>
 
@@ -87,7 +83,9 @@
                         </div>
                     </td>
                     <td class="cart_total">
-                        <p class="cart_total_price">{{number_format($product['price'] * $product['quantity'])}}đ</p>
+                        <p class="cart_total_price">
+                            {{number_format($product['price'] * $product['quantity'])}}đ
+                        </p>
                     </td>
                 </tr>
                 @endforeach
@@ -99,7 +97,7 @@
                 <tr>
 
                     <td colspan="3" class="font-weight-bold">Tổng Cộng</td>
-                    <td class="font-weight-bold">{{number_format($totalAmount)}}đ</td>
+                    <td class="font-weight-bold">{{number_format($totalAmount, 0, ',', '.')}}đ</td>
                 </tr>
             </tfoot>
         </table>

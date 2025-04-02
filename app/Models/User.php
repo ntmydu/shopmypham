@@ -17,11 +17,15 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+    protected $keyType = 'string'; // Thay đổi kiểu khóa chính thành string
+    public $incrementing = false; // Tắt tính năng auto-increment
+    protected  $table = 'users';
     protected $fillable = [
+        'id',
         'name',
         'email',
+        'role',
         'password',
-
     ];
 
     /**
@@ -29,6 +33,7 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+
     protected $hidden = [
         'password',
         'remember_token',

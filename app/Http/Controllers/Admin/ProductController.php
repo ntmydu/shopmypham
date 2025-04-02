@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Menu;
 use App\Models\Product;
 use App\Models\Upload;
+use Illuminate\Support\Str;
 use Laravel\Prompts\Prompt;
 use Illuminate\Support\Facades\File;
 
@@ -37,7 +38,19 @@ class ProductController extends Controller
         $request->validate([
             'images.*' => 'image | mimes:png,jpg,jpeg,webp'
         ]);
-        $products = Product::create($request->all());
+        $randomId = Str::random(10);
+        $products = Product::create([
+            'id' => $randomId,
+            'name' => $request->name,
+
+            'description' => $request->description,
+            'content' => $request->content,
+            'stock' => $request->stock,
+            'menu_id' => $request->menu_id,
+            'price' => $request->price,
+            'price_sale' => $request->price_sale,
+            'status' => $request->status,
+        ]);
         $hinhanh = [];
         if ($files = $request->file('images')) {
             foreach ($files as $key => $file) {
@@ -84,6 +97,7 @@ class ProductController extends Controller
         $product->name = $request->input('name');
         $product->menu_id = $request->input('menu_id');
         $product->content = $request->input('content');
+        $product->stock = $request->input('stock');
         $product->description = $request->input('description');
         $product->price = $request->input('price');
         $product->price_sale = $request->input('price_sale');
@@ -141,5 +155,21 @@ class ProductController extends Controller
         $product->delete();
 
         return redirect()->back()->with('success', 'Xóa sản phẩm thành công');
+    }
+    public function search(Request $request)
+    {
+
+        $keywords = $request->input('searchInput', '');
+
+        $product = Product::all();
+
+        $search_product = Product::where('name', 'like', '%' . trim($keywords) . '%')->get();
+
+
+        return view('admin.product.search', [
+            'product' => $product,
+            'search_product' => $search_product,
+
+        ]);
     }
 }

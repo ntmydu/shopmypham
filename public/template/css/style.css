@@ -74,7 +74,7 @@ body,
     font-size: 28px;
     transition: var(--transition-1);
     padding-left: 15px;
-    margin-top: 8px;
+    margin-top: -2px;
 }
 
 .logo {

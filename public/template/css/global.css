@@ -322,3 +322,31 @@ a {
 .col-6 h2 {
     width: 400px;
 }
+
+.search-input {
+    width: 200px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+
+.wrap-icon-headerơ {
+    display: flex;
+}
+
+.dropdowm-menu__profile {
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.dropdowm-menu__profile .dropdowm-item {
+    white-space: nowrap;
+}
+
+.list-inline {
+    display: flex;
+}

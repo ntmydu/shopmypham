@@ -21,7 +21,9 @@ class MenuService
     public function create($request)
     {
         try {
+            $randomId = Str::random(10);
             Menu::create([
+
                 'name' => (string)$request->input('name'),
                 'parent_id' => (int)$request->input('parent_id'),
                 'status' => (int)$request->input('status'),

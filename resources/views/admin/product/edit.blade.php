@@ -64,6 +64,13 @@
                 @enderror
             </div>
             <div class="form-group">
+                <label for="">Số lượng</label>
+                <input type="text" name="stock" class="form-control" value="{{$product->stock}}">
+                @error('stock')
+                <small class="help-block">{{$message}}</small>
+                @enderror
+            </div>
+            <div class="form-group">
                 <label for="">Giá sản phẩm</label>
                 <input type="text" name="price" class="form-control" value="{{$product->price}}">
                 @error('price')

@@ -57,6 +57,6 @@
 
 @section('footer')
 <script>
-CKEDITOR.replace('description');
+    CKEDITOR.replace('description');
 </script>
 @endsection

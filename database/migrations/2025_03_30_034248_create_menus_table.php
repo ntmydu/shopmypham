@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('menus', function (Blueprint $table) {
-            $table->id();
-            $table->string('name', 255);
-            $table->integer('parent_id');
-            $table->text('description');
-            $table->boolean('status');
+            $table->string('id')->primary();
+            $table->string('name');
+            $table->string('parent_id');
+            $table->string('description')->nullable();
+            $table->integer('status');
             $table->timestamps();
         });
     }

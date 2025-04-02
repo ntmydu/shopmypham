@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
+use App\Models\User;
 
 class AdminMiddleware
 {
@@ -17,13 +18,9 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::check() && Auth::user()->role_user === 'admin') {
-            return $next($request);
-        }
-        if (Auth::check() && Auth::user()->role_user === 'saler') {
-            return $next($request);
+            return Auth::user()->role_user;
         }
 
-
-        return redirect()->route('/login')->with('error', 'Bạn không được truy cập trang web này.');
+        return redirect()->route('admin.login')->with('error', 'Bạn không được truy cập trang web này.');
     }
 }

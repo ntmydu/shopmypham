@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Menu\CreateFormRequest;
 use Illuminate\Http\Request;
 use App\Models\Menu;
+use Illuminate\Support\Str;
 use App\Http\Services\Menu\MenuService;
 
 
@@ -28,10 +29,23 @@ class MenuController extends Controller
     }
     public function store(Request $request)
     {
-        $this->menuService->create($request);
+        $randomId = Str::random(10);
 
-        return redirect('admin/menu/list');
+        // Tạo sản phẩm mới
+        $menus = Menu::create([
+            'id' => $randomId,
+            // Đảm bảo rằng id được cung cấp
+            'name' => $request->name,
+            'parent_id' => $request->parent_id,
+            'description' => $request->description,
+            'status' => $request->status,
+        ]);
+
+        return redirect()->back()->with('success', 'Thêm danh mục thành công.');
     }
+
+
+
 
     public function index()
     {
@@ -94,5 +108,21 @@ class MenuController extends Controller
         $menu->save();
 
         return redirect('/admin/menu/list');
+    }
+    public function search(Request $request)
+    {
+
+        $keywords = $request->input('searchInput', '');
+
+        $menus = Menu::all();
+
+        $search_menu = Menu::where('name', 'like', '%' . trim($keywords) . '%')->get();
+
+
+        return view('admin.menu.search', [
+            'menus' => $menus,
+            'search_menu' => $search_menu,
+
+        ]);
     }
 }
